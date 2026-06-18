@@ -14,3 +14,4 @@ third_party/zydis/
 *.lib
 *.obj
 *.exe
+!releases/*.exe
