@@ -1,40 +1,66 @@
 # Release binaries
 
-Pre-built executables of `rop_scanner` for four platforms. These are the **CLI** binaries only — for the optional Qt GUI you still have to build from source (see [`../README.md`](../README.md#9-the-qt6-gui)).
+Pre-built binaries of `rop_scanner` organized by build type and platform.
 
-| File | OS / Arch | Format | Built on | Compiler |
-|---|---|---|---|---|
-| [`rop_scanner-linux-x64`](rop_scanner-linux-x64) | Linux x86_64 | ELF, dynamically linked, stripped | Ubuntu 22.04 | GCC 11.4 |
-| [`rop_scanner-macos-arm64`](rop_scanner-macos-arm64) | macOS Apple Silicon | Mach-O arm64 | macOS 15+ | Apple Clang 21 |
-| [`rop_scanner-windows-x64.exe`](rop_scanner-windows-x64.exe) | Windows 64-bit | PE32+ x86-64, console | Windows 11 + VS 2022 | MSVC 19.43 |
-| [`rop_scanner-windows-x86.exe`](rop_scanner-windows-x86.exe) | Windows 32-bit | PE32 i386, console | Windows 11 + VS 2022 | MSVC 19.43 (amd64_x86 cross) |
-
-[`SHA256SUMS.txt`](SHA256SUMS.txt) — verify with `shasum -a 256 -c SHA256SUMS.txt` (macOS / Linux) or `certutil -hashfile <file> SHA256` (Windows).
-
-## Runtime requirements
-
-- **Linux**: glibc 2.31+ (Ubuntu 20.04+, RHEL 9+, anything reasonably recent). The binary is dynamically linked against the system libc / libstdc++.
-- **macOS**: macOS 12+ on Apple Silicon (M-series). For Intel macs you'll need to build from source — `brew install cmake && ./mac_build.sh`.
-- **Windows**: any 64-bit or 32-bit Windows from Windows 7 onward should be fine. No Visual C++ runtime DLLs needed.
-
-## Note on PE file architecture
-
-`rop_scanner` only **reads** the bytes of the PE file you pass it; the host architecture you run it on has nothing to do with the target architecture of the PE you're scanning. Use any of these four binaries on any of those four host OSes to analyze a Windows x86 or x86_64 PE file. ARM64 / IA64 / RISC-V PE files are explicitly rejected — Zydis doesn't know how to decode them.
-
-## Want the GUI?
-
-The Qt6 GUI front-end requires Qt to be installed on the host. There are no pre-built GUI bundles in this folder — instead see the [main README](../README.md#9-the-qt6-gui) for one-line build commands per platform.
-
-## Quick sanity check after download
-
-```sh
-# Linux / macOS
-./rop_scanner-linux-x64 --help | head -3
-./rop_scanner-macos-arm64 --help | head -3
-
-# Windows
-rop_scanner-windows-x64.exe --help
-rop_scanner-windows-x86.exe --help
+```
+releases/
+├── console/                     # CLI binaries, no Qt needed
+│   ├── linux_x64/
+│   ├── apple-silicon/
+│   ├── windows_x64/
+│   └── windows_32/
+└── gui/                         # Qt-based GUI, Qt runtime bundled or required
+    ├── linux_x64/
+    ├── apple-silicon/
+    ├── windows_x64/
+    └── windows_32/
 ```
 
-Expected first line: `rop_scanner — ROP/JOP/syscall/pivot gadget hunter for Windows PE files`.
+[`SHA256SUMS.txt`](SHA256SUMS.txt) — verify with `shasum -a 256 -c SHA256SUMS.txt` (Linux / macOS) or `certutil -hashfile <file> SHA256` (Windows).
+
+## Console (CLI)
+
+| Path | OS / Arch | Format | Built with |
+|---|---|---|---|
+| [`console/linux_x64/rop_scanner`](console/linux_x64/rop_scanner) | Linux x86_64 | ELF, dynamically linked, stripped | GCC 11.4 (Ubuntu 22.04) |
+| [`console/apple-silicon/rop_scanner`](console/apple-silicon/rop_scanner) | macOS arm64 | Mach-O arm64 | Apple Clang 21 |
+| [`console/windows_x64/rop_scanner.exe`](console/windows_x64/rop_scanner.exe) | Windows 64-bit | PE32+ x86-64, console subsystem | MSVC 19.43 / Ninja |
+| [`console/windows_32/rop_scanner.exe`](console/windows_32/rop_scanner.exe) | Windows 32-bit | PE32 i386, console subsystem | MSVC 19.43 (amd64_x86 cross) |
+
+**Runtime requirements:** none beyond a glibc 2.31+ for Linux (Ubuntu 20.04 / RHEL 9+) and macOS 12+ for Apple Silicon. Windows binaries don't need a VC++ runtime.
+
+## GUI (Qt6 / Qt5)
+
+| Path | OS / Arch | Qt | Notes |
+|---|---|---|---|
+| [`gui/linux_x64/rop_scanner_gui`](gui/linux_x64/rop_scanner_gui) | Linux x86_64 | Qt 6.2 (system) | Needs `qt6-base` runtime: `sudo apt install libqt6widgets6`. **Not portable.** |
+| [`gui/apple-silicon/rop_scanner_gui.app/`](gui/apple-silicon/rop_scanner_gui.app) | macOS arm64 | Qt 6.11 (bundled via `macdeployqt`) | Fully self-contained — double-click to launch. |
+| [`gui/windows_x64/rop_scanner_gui.exe`](gui/windows_x64/rop_scanner_gui.exe) | Windows 64-bit | Qt 6.7.3 (bundled via `windeployqt`) | Run from this directory; Qt DLLs ship alongside. |
+| [`gui/windows_32/rop_scanner_gui.exe`](gui/windows_32/rop_scanner_gui.exe) | Windows 32-bit | Qt 5.15.2 (bundled via `windeployqt`) | Run from this directory; Qt DLLs ship alongside. Uses Qt5 because modern Qt6 dropped Win32 MSVC builds. |
+
+**Why three platforms ship Qt and Linux doesn't:** on Windows `windeployqt` and on macOS `macdeployqt` produce a self-contained bundle as their standard output. Linux has no first-class equivalent shipped with Qt itself (AppImage is the usual answer but is a separate tool); for Linux desktops it's idiomatic to depend on the distro's `qt6-base` package, which is one `apt`/`dnf` away.
+
+## Note on target PE architecture
+
+`rop_scanner` only **reads** the bytes of the PE you give it; the host OS / arch you run it on has no relationship to the target arch of the PE you're scanning. Use any of these four host platforms to analyze a Windows x86 or x86_64 PE. ARM64 / IA64 / RISC-V PE files are rejected up front — Zydis doesn't decode them.
+
+## Smoke check after download
+
+```sh
+# Linux
+./console/linux_x64/rop_scanner --help | head -3
+
+# macOS
+./console/apple-silicon/rop_scanner --help | head -3
+open ./gui/apple-silicon/rop_scanner_gui.app
+
+# Windows  (cmd.exe)
+console\windows_x64\rop_scanner.exe --help
+gui\windows_x64\rop_scanner_gui.exe
+```
+
+The first line of console output for any of these should be:
+
+```
+rop_scanner — ROP/JOP/syscall/pivot gadget hunter for Windows PE files
+```
