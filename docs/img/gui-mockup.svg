@@ -35,7 +35,7 @@
   <rect x="20" y="116" width="14" height="14" rx="2" fill="#fff" stroke="#8e8e93"/>
   <text x="42" y="128" fill="#222">Recurse into subdirectories  (--recursive)</text>
 
-  <!-- ---- Scanning group ---- -->
+  <!-- Scanning group -->
   <rect x="20" y="150" width="920" height="180" rx="6" fill="#fff" stroke="#dcdfe3"/>
   <text x="34" y="148" fill="#444" font-weight="bold">Scanning</text>
 
@@ -65,7 +65,7 @@
     <text x="656" y="320" fill="#222">0</text>
   </g>
 
-  <!-- ---- CFG / Symbols group ---- -->
+  <!-- CFG / Symbols group -->
   <rect x="20" y="350" width="920" height="110" rx="6" fill="#fff" stroke="#dcdfe3"/>
   <text x="34" y="348" fill="#444" font-weight="bold">CFG / Symbols</text>
 
