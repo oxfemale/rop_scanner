@@ -1,0 +1,16 @@
+build/
+build_*/
+out/
+cmake-build-*/
+third_party/zydis/
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.pdb
+*.ilk
+*.exp
+*.lib
+*.obj
+*.exe

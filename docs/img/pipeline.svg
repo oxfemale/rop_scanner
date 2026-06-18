@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 380" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+    <marker id="arr2" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#58a6ff"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="380" fill="url(#bg3)"/>
+
+  <text x="60" y="50" font-size="22" fill="#c9d1d9" font-weight="bold">Pipeline</text>
+  <text x="60" y="76" font-size="13" fill="#8b949e">offline: never calls LoadLibrary, never executes a byte of the input</text>
+
+  <!-- Stage boxes -->
+  <g font-size="14">
+    <!-- 1 PE bytes -->
+    <rect x="30"  y="130" width="170" height="100" rx="10" fill="#161b22" stroke="#30363d"/>
+    <text x="115" y="160" text-anchor="middle" fill="#79c0ff" font-weight="bold">PE file</text>
+    <text x="115" y="183" text-anchor="middle" fill="#8b949e">ntdll.dll</text>
+    <text x="115" y="203" text-anchor="middle" fill="#8b949e">git.exe</text>
+    <text x="115" y="222" text-anchor="middle" fill="#8b949e">driver.sys</text>
+
+    <!-- 2 PE parser -->
+    <rect x="230" y="130" width="180" height="100" rx="10" fill="#161b22" stroke="#30363d"/>
+    <text x="320" y="158" text-anchor="middle" fill="#d2a8ff" font-weight="bold">pe_loader</text>
+    <text x="320" y="180" text-anchor="middle" fill="#8b949e">sections · exports</text>
+    <text x="320" y="200" text-anchor="middle" fill="#8b949e">.pdata · CFG</text>
+    <text x="320" y="220" text-anchor="middle" fill="#8b949e">image base</text>
+
+    <!-- 3 ending finder -->
+    <rect x="440" y="130" width="200" height="100" rx="10" fill="#161b22" stroke="#30363d"/>
+    <text x="540" y="158" text-anchor="middle" fill="#d2a8ff" font-weight="bold">ending finder</text>
+    <text x="540" y="180" text-anchor="middle" fill="#8b949e">ret · ret imm16</text>
+    <text x="540" y="200" text-anchor="middle" fill="#8b949e">syscall · sysenter</text>
+    <text x="540" y="220" text-anchor="middle" fill="#8b949e">jmp/call reg</text>
+
+    <!-- 4 back-decoder + zydis -->
+    <rect x="670" y="130" width="200" height="100" rx="10" fill="#161b22" stroke="#30363d"/>
+    <text x="770" y="158" text-anchor="middle" fill="#d2a8ff" font-weight="bold">back-decoder</text>
+    <text x="770" y="180" text-anchor="middle" fill="#8b949e">Zydis decoder</text>
+    <text x="770" y="200" text-anchor="middle" fill="#8b949e">walks max-bytes back</text>
+    <text x="770" y="220" text-anchor="middle" fill="#8b949e">rejects control flow</text>
+
+    <!-- 5 classify -->
+    <rect x="900" y="130" width="190" height="100" rx="10" fill="#161b22" stroke="#30363d"/>
+    <text x="995" y="158" text-anchor="middle" fill="#d2a8ff" font-weight="bold">classify</text>
+    <text x="995" y="180" text-anchor="middle" fill="#8b949e">category + semantic</text>
+    <text x="995" y="200" text-anchor="middle" fill="#8b949e">score (0–100)</text>
+    <text x="995" y="220" text-anchor="middle" fill="#8b949e">EAT + .pdata + PDB</text>
+  </g>
+
+  <!-- arrows between -->
+  <g stroke="#58a6ff" stroke-width="2">
+    <line x1="200" y1="180" x2="225" y2="180" marker-end="url(#arr2)"/>
+    <line x1="410" y1="180" x2="435" y2="180" marker-end="url(#arr2)"/>
+    <line x1="640" y1="180" x2="665" y2="180" marker-end="url(#arr2)"/>
+    <line x1="870" y1="180" x2="895" y2="180" marker-end="url(#arr2)"/>
+  </g>
+
+  <!-- output pane -->
+  <rect x="30" y="270" width="1060" height="90" rx="10" fill="#161b22" stroke="#30363d"/>
+  <text x="50" y="298" font-size="13" fill="#8b949e">output (one of)</text>
+  <g font-size="14" font-weight="bold">
+    <text x="65"  y="335" fill="#79c0ff">text</text>
+    <text x="220" y="335" fill="#d2a8ff">json</text>
+    <text x="370" y="335" fill="#7ee787">ropper</text>
+    <text x="540" y="335" fill="#ffa657">pwntools</text>
+  </g>
+  <g font-size="12" fill="#6e7681">
+    <text x="65"  y="353">human-readable</text>
+    <text x="220" y="353">structured / pipeline</text>
+    <text x="370" y="353">drop-in for ropper consumers</text>
+    <text x="540" y="353">paste into Python directly</text>
+  </g>
+</svg>

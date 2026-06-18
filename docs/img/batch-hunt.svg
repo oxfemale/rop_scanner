@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 460" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+  <defs>
+    <linearGradient id="bg6" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+    <marker id="ar4" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="460" fill="url(#bg6)"/>
+
+  <text x="60" y="50" font-size="22" fill="#c9d1d9" font-weight="bold">Cross-module gadget hunt</text>
+  <text x="60" y="76" font-size="13" fill="#8b949e">--dir C:\Windows\System32 finds the gadgets that exist in EVERY module loaded by a default Windows process</text>
+
+  <!-- modules grid -->
+  <g font-size="14">
+    <rect x="60"  y="120" width="180" height="60" rx="8" fill="#161b22" stroke="#30363d"/>
+    <text x="150" y="155" text-anchor="middle" fill="#79c0ff">ntdll.dll</text>
+
+    <rect x="260" y="120" width="180" height="60" rx="8" fill="#161b22" stroke="#30363d"/>
+    <text x="350" y="155" text-anchor="middle" fill="#79c0ff">kernelbase.dll</text>
+
+    <rect x="460" y="120" width="180" height="60" rx="8" fill="#161b22" stroke="#30363d"/>
+    <text x="550" y="155" text-anchor="middle" fill="#79c0ff">kernel32.dll</text>
+
+    <rect x="660" y="120" width="180" height="60" rx="8" fill="#161b22" stroke="#30363d"/>
+    <text x="750" y="155" text-anchor="middle" fill="#79c0ff">user32.dll</text>
+
+    <rect x="860" y="120" width="180" height="60" rx="8" fill="#161b22" stroke="#30363d"/>
+    <text x="950" y="155" text-anchor="middle" fill="#79c0ff">advapi32.dll</text>
+
+    <rect x="60"  y="195" width="180" height="60" rx="8" fill="#161b22" stroke="#30363d"/>
+    <text x="150" y="230" text-anchor="middle" fill="#79c0ff">msvcrt.dll</text>
+
+    <rect x="260" y="195" width="180" height="60" rx="8" fill="#161b22" stroke="#30363d"/>
+    <text x="350" y="230" text-anchor="middle" fill="#79c0ff">shell32.dll</text>
+
+    <rect x="460" y="195" width="180" height="60" rx="8" fill="#161b22" stroke="#30363d"/>
+    <text x="550" y="230" text-anchor="middle" fill="#79c0ff">oleaut32.dll</text>
+
+    <rect x="660" y="195" width="180" height="60" rx="8" fill="#161b22" stroke="#30363d"/>
+    <text x="750" y="230" text-anchor="middle" fill="#79c0ff">wininet.dll</text>
+
+    <rect x="860" y="195" width="180" height="60" rx="8" fill="#161b22" stroke="#30363d"/>
+    <text x="950" y="230" text-anchor="middle" fill="#79c0ff">bcryptprimitives.dll</text>
+  </g>
+
+  <!-- arrows converging to result -->
+  <g stroke="#3fb950" stroke-width="2" opacity="0.6">
+    <line x1="150" y1="180" x2="600" y2="340" marker-end="url(#ar4)"/>
+    <line x1="350" y1="180" x2="600" y2="340" marker-end="url(#ar4)"/>
+    <line x1="550" y1="180" x2="600" y2="340" marker-end="url(#ar4)"/>
+    <line x1="750" y1="180" x2="600" y2="340" marker-end="url(#ar4)"/>
+    <line x1="950" y1="180" x2="600" y2="340" marker-end="url(#ar4)"/>
+    <line x1="150" y1="255" x2="600" y2="340" marker-end="url(#ar4)"/>
+    <line x1="350" y1="255" x2="600" y2="340" marker-end="url(#ar4)"/>
+    <line x1="550" y1="255" x2="600" y2="340" marker-end="url(#ar4)"/>
+    <line x1="750" y1="255" x2="600" y2="340" marker-end="url(#ar4)"/>
+    <line x1="950" y1="255" x2="600" y2="340" marker-end="url(#ar4)"/>
+  </g>
+
+  <!-- aggregated result -->
+  <rect x="200" y="330" width="800" height="100" rx="10" fill="#1f3a25" stroke="#3fb950" stroke-width="2"/>
+  <text x="600" y="362" text-anchor="middle" font-size="16" fill="#7ee787" font-weight="bold">"syscall"  →  found in 9 / 10 modules</text>
+  <text x="600" y="390" text-anchor="middle" font-size="14" fill="#c9d1d9" font-family="monospace">0F 05</text>
+  <text x="600" y="412" text-anchor="middle" font-size="12" fill="#6e7681">picked because it's in everything the loader maps by default — guaranteed presence at runtime</text>
+</svg>

@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+  <defs>
+    <linearGradient id="bg5" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="520" fill="url(#bg5)"/>
+
+  <text x="60" y="50" font-size="22" fill="#c9d1d9" font-weight="bold">Two-axis classification</text>
+  <text x="60" y="76" font-size="13" fill="#8b949e">every gadget is labeled by HOW it terminates and by WHAT EFFECT its body produces</text>
+
+  <!-- categories (terminator) -->
+  <text x="60" y="120" font-size="16" fill="#79c0ff" font-weight="bold">CATEGORY — how the gadget ends</text>
+
+  <g font-size="13">
+    <rect x="60"  y="140" width="160" height="74" rx="8" fill="#1f2d3a" stroke="#388bfd"/>
+    <text x="140" y="166" text-anchor="middle" fill="#79c0ff" font-weight="bold">rop</text>
+    <text x="140" y="186" text-anchor="middle" fill="#8b949e">ends with ret</text>
+    <text x="140" y="204" text-anchor="middle" fill="#6e7681">pop rcx ; ret</text>
+
+    <rect x="240" y="140" width="160" height="74" rx="8" fill="#382e1f" stroke="#d29922"/>
+    <text x="320" y="166" text-anchor="middle" fill="#ffa657" font-weight="bold">jop</text>
+    <text x="320" y="186" text-anchor="middle" fill="#8b949e">ends with jmp/call reg</text>
+    <text x="320" y="204" text-anchor="middle" fill="#6e7681">jmp rax</text>
+
+    <rect x="420" y="140" width="160" height="74" rx="8" fill="#1f3a25" stroke="#3fb950"/>
+    <text x="500" y="166" text-anchor="middle" fill="#7ee787" font-weight="bold">syscall</text>
+    <text x="500" y="186" text-anchor="middle" fill="#8b949e">ends with syscall</text>
+    <text x="500" y="204" text-anchor="middle" fill="#6e7681">mov eax,N ; syscall</text>
+
+    <rect x="600" y="140" width="160" height="74" rx="8" fill="#3a1f2a" stroke="#f85149"/>
+    <text x="680" y="166" text-anchor="middle" fill="#ff7b72" font-weight="bold">pivot</text>
+    <text x="680" y="186" text-anchor="middle" fill="#8b949e">moves rsp</text>
+    <text x="680" y="204" text-anchor="middle" fill="#6e7681">xchg rax, rsp ; ret</text>
+
+    <rect x="780" y="140" width="160" height="74" rx="8" fill="#2a1f3a" stroke="#bc8cff"/>
+    <text x="860" y="166" text-anchor="middle" fill="#d2a8ff" font-weight="bold">ret</text>
+    <text x="860" y="186" text-anchor="middle" fill="#8b949e">bare return</text>
+    <text x="860" y="204" text-anchor="middle" fill="#6e7681">ret imm16</text>
+
+    <rect x="960" y="140" width="160" height="74" rx="8" fill="#21262d" stroke="#30363d"/>
+    <text x="1040" y="166" text-anchor="middle" fill="#c9d1d9" font-weight="bold">misc</text>
+    <text x="1040" y="186" text-anchor="middle" fill="#8b949e">other useful end</text>
+    <text x="1040" y="204" text-anchor="middle" fill="#6e7681">unusual flow</text>
+  </g>
+
+  <!-- semantics -->
+  <text x="60" y="270" font-size="16" fill="#79c0ff" font-weight="bold">SEMANTIC — what effect the body produces</text>
+
+  <g font-size="13">
+    <rect x="60"  y="290" width="170" height="74" rx="8" fill="#21262d" stroke="#30363d"/>
+    <text x="145" y="316" text-anchor="middle" fill="#79c0ff" font-weight="bold">load-const</text>
+    <text x="145" y="336" text-anchor="middle" fill="#6e7681">pop reg ; ret</text>
+    <text x="145" y="354" text-anchor="middle" fill="#8b949e">set arg / value</text>
+
+    <rect x="250" y="290" width="170" height="74" rx="8" fill="#21262d" stroke="#30363d"/>
+    <text x="335" y="316" text-anchor="middle" fill="#79c0ff" font-weight="bold">mov-reg</text>
+    <text x="335" y="336" text-anchor="middle" fill="#6e7681">mov dst,src ; ret</text>
+    <text x="335" y="354" text-anchor="middle" fill="#8b949e">copy register</text>
+
+    <rect x="440" y="290" width="170" height="74" rx="8" fill="#21262d" stroke="#30363d"/>
+    <text x="525" y="316" text-anchor="middle" fill="#79c0ff" font-weight="bold">write-mem</text>
+    <text x="525" y="336" text-anchor="middle" fill="#6e7681">mov [dst],src ; ret</text>
+    <text x="525" y="354" text-anchor="middle" fill="#8b949e">write-what-where</text>
+
+    <rect x="630" y="290" width="170" height="74" rx="8" fill="#21262d" stroke="#30363d"/>
+    <text x="715" y="316" text-anchor="middle" fill="#79c0ff" font-weight="bold">read-mem</text>
+    <text x="715" y="336" text-anchor="middle" fill="#6e7681">mov dst,[src] ; ret</text>
+    <text x="715" y="354" text-anchor="middle" fill="#8b949e">leak / deref</text>
+
+    <rect x="820" y="290" width="170" height="74" rx="8" fill="#21262d" stroke="#30363d"/>
+    <text x="905" y="316" text-anchor="middle" fill="#79c0ff" font-weight="bold">arith</text>
+    <text x="905" y="336" text-anchor="middle" fill="#6e7681">add/sub/xor ; ret</text>
+    <text x="905" y="354" text-anchor="middle" fill="#8b949e">build value</text>
+
+    <rect x="60"  y="380" width="170" height="74" rx="8" fill="#21262d" stroke="#30363d"/>
+    <text x="145" y="406" text-anchor="middle" fill="#79c0ff" font-weight="bold">stack-pivot</text>
+    <text x="145" y="426" text-anchor="middle" fill="#6e7681">xchg rsp,reg</text>
+    <text x="145" y="444" text-anchor="middle" fill="#8b949e">switch to attacker stack</text>
+
+    <rect x="250" y="380" width="170" height="74" rx="8" fill="#21262d" stroke="#30363d"/>
+    <text x="335" y="406" text-anchor="middle" fill="#79c0ff" font-weight="bold">syscall</text>
+    <text x="335" y="426" text-anchor="middle" fill="#6e7681">... ; syscall</text>
+    <text x="335" y="444" text-anchor="middle" fill="#8b949e">direct NT call</text>
+
+    <rect x="440" y="380" width="170" height="74" rx="8" fill="#21262d" stroke="#30363d"/>
+    <text x="525" y="406" text-anchor="middle" fill="#79c0ff" font-weight="bold">indirect</text>
+    <text x="525" y="426" text-anchor="middle" fill="#6e7681">jmp/call reg</text>
+    <text x="525" y="444" text-anchor="middle" fill="#8b949e">JOP transfer</text>
+
+    <rect x="630" y="380" width="170" height="74" rx="8" fill="#21262d" stroke="#30363d"/>
+    <text x="715" y="406" text-anchor="middle" fill="#79c0ff" font-weight="bold">return-only</text>
+    <text x="715" y="426" text-anchor="middle" fill="#6e7681">ret (no body)</text>
+    <text x="715" y="444" text-anchor="middle" fill="#8b949e">stack-skip</text>
+
+    <rect x="820" y="380" width="170" height="74" rx="8" fill="#21262d" stroke="#30363d"/>
+    <text x="905" y="406" text-anchor="middle" fill="#79c0ff" font-weight="bold">other</text>
+    <text x="905" y="426" text-anchor="middle" fill="#6e7681">--</text>
+    <text x="905" y="444" text-anchor="middle" fill="#8b949e">catch-all</text>
+  </g>
+
+  <text x="60" y="494" font-size="12" fill="#6e7681">filter by either axis: --filter "write-mem"  ·  --filter "syscall"  ·  --filter "pop rcx"</text>
+</svg>

@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 460" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#58a6ff"/>
+    </marker>
+  </defs>
+  <rect width="1100" height="460" fill="url(#bg2)"/>
+
+  <!-- title -->
+  <text x="60" y="50" font-size="22" fill="#c9d1d9" font-weight="bold">Anatomy of a gadget</text>
+  <text x="60" y="76" font-size="13" fill="#8b949e">a window of raw bytes inside an executable PE section → one valid x86_64 instruction stream → an ending terminator</text>
+
+  <!-- raw byte strip -->
+  <g font-size="22" font-weight="bold">
+    <rect x="60"  y="120" width="80" height="60" rx="6" fill="#21262d" stroke="#30363d"/>
+    <text x="100" y="158" text-anchor="middle" fill="#7ee787">59</text>
+
+    <rect x="150" y="120" width="80" height="60" rx="6" fill="#21262d" stroke="#30363d"/>
+    <text x="190" y="158" text-anchor="middle" fill="#7ee787">5A</text>
+
+    <rect x="240" y="120" width="80" height="60" rx="6" fill="#21262d" stroke="#30363d"/>
+    <text x="280" y="158" text-anchor="middle" fill="#7ee787">41</text>
+
+    <rect x="330" y="120" width="80" height="60" rx="6" fill="#21262d" stroke="#30363d"/>
+    <text x="370" y="158" text-anchor="middle" fill="#7ee787">58</text>
+
+    <rect x="420" y="120" width="80" height="60" rx="6" fill="#21262d" stroke="#30363d"/>
+    <text x="460" y="158" text-anchor="middle" fill="#7ee787">41</text>
+
+    <rect x="510" y="120" width="80" height="60" rx="6" fill="#21262d" stroke="#30363d"/>
+    <text x="550" y="158" text-anchor="middle" fill="#7ee787">59</text>
+
+    <rect x="600" y="120" width="80" height="60" rx="6" fill="#3f1f1f" stroke="#f85149" stroke-width="2"/>
+    <text x="640" y="158" text-anchor="middle" fill="#ff7b72">C3</text>
+  </g>
+
+  <!-- grouping brackets -->
+  <g stroke="#bc8cff" stroke-width="2" fill="none">
+    <path d="M60,200 L60,210 L140,210 L140,200"/>
+    <path d="M150,200 L150,210 L230,210 L230,200"/>
+    <path d="M240,200 L240,210 L410,210 L410,200"/>
+    <path d="M420,200 L420,210 L590,210 L590,200"/>
+    <path d="M600,200 L600,210 L680,210 L680,200"/>
+  </g>
+
+  <!-- instruction labels under brackets -->
+  <g font-size="14" fill="#d2a8ff" text-anchor="middle">
+    <text x="100" y="240">pop rcx</text>
+    <text x="190" y="240">pop rdx</text>
+    <text x="325" y="240">pop r8</text>
+    <text x="505" y="240">pop r9</text>
+    <text x="640" y="240">ret</text>
+  </g>
+
+  <!-- labels on top of the byte strip -->
+  <g font-size="11" fill="#8b949e" text-anchor="middle">
+    <text x="100" y="105">1 byte</text>
+    <text x="190" y="105">1 byte</text>
+    <text x="325" y="105">REX.B+pop</text>
+    <text x="505" y="105">REX.B+pop</text>
+    <text x="640" y="105">terminator</text>
+  </g>
+
+  <!-- arrow from bytes to "decoded gadget" pane -->
+  <line x1="370" y1="285" x2="370" y2="320" stroke="#58a6ff" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- decoded gadget pane -->
+  <rect x="60" y="320" width="980" height="110" rx="8" fill="#161b22" stroke="#30363d"/>
+  <text x="80" y="350" font-size="13" fill="#8b949e">decoded gadget</text>
+  <text x="80" y="382" font-size="20" fill="#79c0ff">pop rcx ; pop rdx ; pop r8 ; pop r9 ; ret</text>
+  <text x="80" y="415" font-size="13" fill="#8b949e">category: <tspan fill="#79c0ff">rop</tspan>   ·   semantic: <tspan fill="#79c0ff">load-const</tspan>   ·   score: <tspan fill="#7ee787">100</tspan>   ·   x64 Windows calling-convention helper</text>
+</svg>
