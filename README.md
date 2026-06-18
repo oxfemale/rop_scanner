@@ -1,5 +1,10 @@
 <p align="right">
-  <b>🇬🇧 English</b> · <a href="README_ru.md">🇷🇺 Русский</a>
+  <b>🇬🇧 English</b> ·
+  <a href="README_ru.md">🇷🇺 Русский</a> ·
+  <a href="README_ua.md">🇺🇦 Українська</a> ·
+  <a href="README_ch.md">🇨🇳 中文</a> ·
+  <a href="README_ge.md">🇩🇪 Deutsch</a> ·
+  <a href="README_fr.md">🇫🇷 Français</a>
 </p>
 
 <p align="center">
