@@ -2,12 +2,18 @@
 REM rop_scanner — Windows build script
 REM
 REM Usage:
-REM   windows_build.bat                 :: Release build in .\build
-REM   windows_build.bat my_build_dir    :: custom build dir
+REM   windows_build.bat                  :: Release build in .\build
+REM   windows_build.bat my_build_dir     :: custom build dir
+REM   windows_build.bat build gui        :: also build the Qt GUI front-end
 REM
 REM Requires:
 REM   - Visual Studio 2019+ (Community / Pro / Enterprise / Build Tools)
 REM   - cmake + ninja  (uses the ones shipped with VS if not on PATH)
+REM   - For the GUI: Qt6 — install with one of:
+REM       * official Qt installer    (https://qt.io/download-open-source)
+REM       * vcpkg install qt6-base
+REM       * MSYS2:  pacman -S mingw-w64-x86_64-qt6-base
+REM     and set QT_PREFIX=C:\Qt\6.x.x\msvc2019_64 before running.
 
 setlocal EnableDelayedExpansion
 
@@ -64,6 +70,22 @@ REM ---- build dir --------------------------------------------------------
 set "BUILD_DIR=%~1"
 if "%BUILD_DIR%"=="" set "BUILD_DIR=build"
 
+REM ---- GUI opt-in -------------------------------------------------------
+set "GUI_FLAG="
+if /I "%~2"=="gui" set "GUI_FLAG=-DBUILD_GUI=ON"
+if /I "%GUI%"=="1" set "GUI_FLAG=-DBUILD_GUI=ON"
+
+if defined GUI_FLAG (
+    if defined QT_PREFIX (
+        set "GUI_FLAG=!GUI_FLAG! -DCMAKE_PREFIX_PATH=!QT_PREFIX!"
+        echo [+] Qt prefix: !QT_PREFIX!
+    ) else (
+        echo [!] GUI requested but QT_PREFIX is not set.
+        echo     Example: set QT_PREFIX=C:\Qt\6.6.0\msvc2019_64
+        echo     Continuing — CMake will try its own search.
+    )
+)
+
 for /f "tokens=*" %%v in ('cmake --version 2^>nul') do (
     echo [+] %%v
     goto :_cmake_done
@@ -82,7 +104,7 @@ echo.
 
 REM ---- configure --------------------------------------------------------
 echo [+] Configuring
-cmake -S . -B %BUILD_DIR% -G Ninja -DCMAKE_BUILD_TYPE=Release
+cmake -S . -B %BUILD_DIR% -G Ninja -DCMAKE_BUILD_TYPE=Release !GUI_FLAG!
 if errorlevel 1 (echo [-] Configure failed ^& exit /b 2)
 
 REM ---- build ------------------------------------------------------------
@@ -100,4 +122,10 @@ if not exist "%BUILD_DIR%\bin\rop_scanner.exe" (
 echo.
 echo [+] OK -^> %BUILD_DIR%\bin\rop_scanner.exe
 "%BUILD_DIR%\bin\rop_scanner.exe" --help | findstr /B "rop_scanner Usage:"
+
+if defined GUI_FLAG (
+    if exist "%BUILD_DIR%\bin\rop_scanner_gui.exe" (
+        echo [+] GUI -^> %BUILD_DIR%\bin\rop_scanner_gui.exe
+    )
+)
 exit /b 0

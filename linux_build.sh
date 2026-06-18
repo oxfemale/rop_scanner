@@ -5,11 +5,16 @@
 #   ./linux_build.sh                    # Release build in ./build
 #   BUILD_DIR=out ./linux_build.sh      # custom build dir
 #   BUILD_TYPE=Debug ./linux_build.sh   # custom build type
+#   GUI=1 ./linux_build.sh              # build the Qt GUI front-end too
 #
 # Requires:
 #   - C++17 compiler (g++ >= 7 or clang++ >= 5)
 #   - CMake >= 3.16
 #   - make or ninja
+#   - For GUI=1 on Debian/Ubuntu:
+#       sudo apt install qt6-base-dev libvulkan-dev
+#     on Fedora/RHEL:
+#       sudo dnf install qt6-qtbase-devel vulkan-headers
 
 set -euo pipefail
 
@@ -35,7 +40,11 @@ fi
 
 BUILD_DIR="${BUILD_DIR:-build}"
 BUILD_TYPE="${BUILD_TYPE:-Release}"
+GUI="${GUI:-0}"
 JOBS="$(nproc 2>/dev/null || echo 4)"
+
+CMAKE_OPTS=("-DCMAKE_BUILD_TYPE=${BUILD_TYPE}")
+[ "${GUI}" = "1" ] && CMAKE_OPTS+=("-DBUILD_GUI=ON")
 
 echo "[+] cmake:    $(cmake --version | head -1)"
 if command -v g++ >/dev/null 2>&1; then
@@ -44,12 +53,12 @@ else
     echo "[+] compiler: $(clang++ --version | head -1)"
 fi
 echo "[+] kernel:   $(uname -srm)"
-echo "[+] target:   ${BUILD_DIR} (${BUILD_TYPE}, ${JOBS} parallel jobs)"
+echo "[+] target:   ${BUILD_DIR} (${BUILD_TYPE}, ${JOBS} parallel jobs)$([ "${GUI}" = "1" ] && echo "  +GUI")"
 echo
 
 # ---- configure ----------------------------------------------------------
 echo "[+] Configuring"
-cmake -S . -B "${BUILD_DIR}" -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
+cmake -S . -B "${BUILD_DIR}" "${CMAKE_OPTS[@]}"
 
 # ---- build --------------------------------------------------------------
 echo
@@ -67,3 +76,10 @@ fi
 echo
 echo "[+] OK → ${BIN}"
 "${BIN}" --help | sed -n '1,3p'
+
+if [ "${GUI}" = "1" ]; then
+    GUI_BIN="${BUILD_DIR}/bin/rop_scanner_gui"
+    if [ -x "${GUI_BIN}" ]; then
+        echo "[+] GUI → ${GUI_BIN}"
+    fi
+fi

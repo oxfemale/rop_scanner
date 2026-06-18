@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
 project(rop_scanner CXX)
 
+option(BUILD_GUI "Build the Qt-based GUI front-end" OFF)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -68,3 +70,10 @@ if(APPLE AND CMAKE_CXX_COMPILER_ID MATCHES "Clang"
 endif()
 
 install(TARGETS rop_scanner RUNTIME DESTINATION bin)
+
+# ---------------------------------------------------------------------------
+# Optional GUI front-end (Qt6 with Qt5 fallback)
+# ---------------------------------------------------------------------------
+if(BUILD_GUI)
+    add_subdirectory(gui)
+endif()

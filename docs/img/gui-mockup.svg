@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 760" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="13">
+  <defs>
+    <linearGradient id="winbg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6f8fa"/>
+      <stop offset="1" stop-color="#ebedef"/>
+    </linearGradient>
+  </defs>
+
+  <!-- window -->
+  <rect x="0" y="0" width="960" height="760" rx="10" fill="url(#winbg)" stroke="#c9d1d9"/>
+
+  <!-- title bar -->
+  <rect x="0" y="0" width="960" height="28" rx="10" fill="#e9ecf0"/>
+  <rect x="0" y="20" width="960" height="8" fill="#e9ecf0"/>
+  <circle cx="16" cy="14" r="6" fill="#ff5f56" stroke="#e0443e"/>
+  <circle cx="34" cy="14" r="6" fill="#ffbd2e" stroke="#dea123"/>
+  <circle cx="52" cy="14" r="6" fill="#27c93f" stroke="#1aab29"/>
+  <text x="480" y="18" text-anchor="middle" fill="#444" font-size="12">rop_scanner</text>
+
+  <!-- mode radios -->
+  <circle cx="20" cy="60" r="6" fill="#0a84ff" stroke="#0a84ff"/>
+  <circle cx="20" cy="60" r="2.5" fill="#fff"/>
+  <text x="34" y="64" fill="#222">Single PE file</text>
+  <circle cx="170" cy="60" r="6" fill="#fff" stroke="#8e8e93"/>
+  <text x="184" y="64" fill="#222">Directory (batch)</text>
+
+  <!-- target row -->
+  <text x="20" y="98" fill="#222">Target:</text>
+  <rect x="80" y="82" width="760" height="22" rx="4" fill="#fff" stroke="#c0c4cc"/>
+  <text x="88" y="98" fill="#9ca0a4">/path/to/ntdll.dll  —  or drop a file/directory here</text>
+  <rect x="850" y="82" width="92" height="22" rx="4" fill="#f4f5f7" stroke="#c0c4cc"/>
+  <text x="896" y="98" text-anchor="middle" fill="#222">Browse…</text>
+
+  <!-- recursive checkbox -->
+  <rect x="20" y="116" width="14" height="14" rx="2" fill="#fff" stroke="#8e8e93"/>
+  <text x="42" y="128" fill="#222">Recurse into subdirectories  (--recursive)</text>
+
+  <!-- ---- Scanning group ---- -->
+  <rect x="20" y="150" width="920" height="180" rx="6" fill="#fff" stroke="#dcdfe3"/>
+  <text x="34" y="148" fill="#444" font-weight="bold">Scanning</text>
+
+  <g font-size="13" fill="#222">
+    <text x="40" y="178">Max bytes back  (--max-bytes):</text>
+    <rect x="640" y="166" width="60" height="20" rx="3" fill="#fff" stroke="#c0c4cc"/>
+    <text x="654" y="180" fill="#222">10</text>
+
+    <text x="40" y="206">Max instructions  (--max-insn):</text>
+    <rect x="640" y="194" width="60" height="20" rx="3" fill="#fff" stroke="#c0c4cc"/>
+    <text x="656" y="208" fill="#222">5</text>
+
+    <text x="40" y="234">Min score  (--min-score):</text>
+    <rect x="640" y="222" width="60" height="20" rx="3" fill="#fff" stroke="#c0c4cc"/>
+    <text x="656" y="236" fill="#222">0</text>
+
+    <text x="40" y="262">Filter  (--filter):</text>
+    <rect x="270" y="250" width="430" height="20" rx="3" fill="#fff" stroke="#c0c4cc"/>
+    <text x="278" y="264" fill="#9ca0a4">pop rcx ; pop rdx     or     write-mem     or     syscall</text>
+
+    <text x="40" y="290">Bad bytes  (--badbytes):</text>
+    <rect x="270" y="278" width="430" height="20" rx="3" fill="#fff" stroke="#c0c4cc"/>
+    <text x="278" y="292" fill="#9ca0a4">00,0a,0d</text>
+
+    <text x="40" y="318">Limit, 0 = all  (--limit):</text>
+    <rect x="640" y="306" width="60" height="20" rx="3" fill="#fff" stroke="#c0c4cc"/>
+    <text x="656" y="320" fill="#222">0</text>
+  </g>
+
+  <!-- ---- CFG / Symbols group ---- -->
+  <rect x="20" y="350" width="920" height="110" rx="6" fill="#fff" stroke="#dcdfe3"/>
+  <text x="34" y="348" fill="#444" font-weight="bold">CFG / Symbols</text>
+
+  <text x="40" y="380" fill="#222">CFG:</text>
+  <circle cx="80" cy="376" r="6" fill="#0a84ff" stroke="#0a84ff"/>
+  <circle cx="80" cy="376" r="2.5" fill="#fff"/>
+  <text x="94" y="380" fill="#222">Any</text>
+  <circle cx="140" cy="376" r="6" fill="#fff" stroke="#8e8e93"/>
+  <text x="154" y="380" fill="#222">Only CFG-valid targets  (--only-cfg)</text>
+  <circle cx="430" cy="376" r="6" fill="#fff" stroke="#8e8e93"/>
+  <text x="444" y="380" fill="#222">Exclude CFG-valid  (--exclude-cfg)</text>
+
+  <rect x="40" y="402" width="14" height="14" rx="2" fill="#fff" stroke="#8e8e93"/>
+  <text x="62" y="414" fill="#222">Skip EAT/.pdata symbol resolution  (--no-symbols, faster)</text>
+
+  <rect x="40" y="426" width="14" height="14" rx="2" fill="#fff" stroke="#8e8e93"/>
+  <text x="62" y="438" fill="#222">Resolve via PDB / dbghelp  (--pdb, Windows only)</text>
+
+  <!-- Output format + buttons -->
+  <text x="20" y="490" fill="#222">Output format:</text>
+  <rect x="115" y="476" width="120" height="22" rx="4" fill="#fff" stroke="#c0c4cc"/>
+  <text x="125" y="491" fill="#222">text</text>
+  <polygon points="222,485 232,485 227,492" fill="#444"/>
+
+  <rect x="720" y="476" width="106" height="22" rx="4" fill="#f4f5f7" stroke="#c0c4cc"/>
+  <text x="773" y="491" text-anchor="middle" fill="#222">Copy cmdline</text>
+  <rect x="830" y="476" width="112" height="22" rx="4" fill="#f4f5f7" stroke="#c0c4cc"/>
+  <text x="886" y="491" text-anchor="middle" fill="#222">Save output…</text>
+
+  <!-- binary row -->
+  <text x="20" y="524" fill="#222">rop_scanner binary:</text>
+  <rect x="148" y="510" width="692" height="22" rx="4" fill="#fff" stroke="#c0c4cc"/>
+  <text x="156" y="526" fill="#9ca0a4">/Users/.../build/bin/rop_scanner</text>
+  <rect x="850" y="510" width="92" height="22" rx="4" fill="#f4f5f7" stroke="#c0c4cc"/>
+  <text x="896" y="526" text-anchor="middle" fill="#222">Browse…</text>
+
+  <!-- run + cancel -->
+  <rect x="20" y="548" width="800" height="40" rx="6" fill="#0a84ff"/>
+  <text x="420" y="572" text-anchor="middle" fill="#fff" font-weight="bold" font-size="14">▶  Run scan</text>
+  <rect x="828" y="548" width="114" height="40" rx="6" fill="#e9ecf0" stroke="#c0c4cc"/>
+  <text x="885" y="572" text-anchor="middle" fill="#9ca0a4">Cancel</text>
+
+  <!-- status label -->
+  <text x="20" y="612" fill="#3fb950" font-weight="bold">Finished — exit 0 (normal)</text>
+
+  <!-- output box (terminal) -->
+  <rect x="20" y="622" width="920" height="116" rx="6" fill="#1e1e1e" stroke="#000"/>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#d4d4d4">
+    <text x="30" y="640">[gui] /Users/.../build/bin/rop_scanner /Users/.../ntdll.dll --max-bytes 10 --max-insn 5 --filter "syscall" --format text</text>
+    <text x="30" y="660" fill="#7ee787">[+] module: ntdll.dll arch=x64 machine=0x8664 image_base=0x180000000 exports=2516 pdata=5679 cfg=2197</text>
+    <text x="30" y="678" fill="#7ee787">[+] gadgets: 3</text>
+    <text x="30" y="700" fill="#79c0ff">[syscall/syscall] score=90 section=.text rva=0x00001E4E</text>
+    <text x="30" y="716" fill="#c9d1d9">  symbol: RtlSetUserFlagsHeap+0xDE</text>
+    <text x="30" y="730" fill="#c9d1d9">  bytes: 0F 05      asm: syscall</text>
+  </g>
+</svg>
